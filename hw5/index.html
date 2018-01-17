@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!--<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Bootstrap -->
+    <!--<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <meta charset="utf-8">
+    <title>大富翁</title>
+  </head>
+  <body style="display:flex;">
+      <div class="head" style="display:inline-flex;flex-direction:column;">
+        <table style="margin: 3em 0 0 4em;">
+          <tbody>
+            <tr>
+              <td style="padding-right:1em;padding-bottom:1em;"><button type="button" class="icon"><img src="images/s1" alt=""></button></td>
+              <td style="padding-bottom:1em;"><button type="button" class="icon"><img src="images/s2" alt=""></button></td>
+            </tr>
+            <tr>
+              <td style="padding-right:1em;padding-bottom:1em;"><button type="button" class="icon"><img src="images/s3" alt=""></button></td>
+              <td style="padding-bottom:1em;"><button type="button" class="icon"><img src="images/s4" alt=""></button></td>
+            </tr>
+            <tr>
+              <td style="padding-right:1em;"><button type="button" class="icon"><img src="images/s5" alt=""></button></td>
+              <td><button type="button" class="icon"><img src="images/s6" alt=""></button></td>
+            </tr>
+          </tbody>
+        </table>
+          <table style="margin:1em 0 0 1em;">
+            <tr>
+              <td><button type="submit" name="button" style="border: 0; background: transparent"><img src="images/ok" alt=""></button></td>
+              <td><button type="button" name="rule" style="border: 0; background: transparent" onclick="drawrule();"><img src="images/rule" alt=""></button></td>
+              <td><button type="submit" name="button" style="border: 0; background: transparent"><img src="images/rank" alt=""></button></td>
+            </tr>
+          </table>
+      </div>
+      <canvas id="canvas" width="500" height="400"></canvas>
+  </body>
+</html>
