@@ -1,0 +1,27 @@
+html, body{
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+body{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background:#c3bbb1;
+	font-size:120%;
+}
+div.train_table{
+	background:#d6d0c7;
+	display: block;
+	height:75%;
+	width:75%;
+}
+div.train_id{
+	width:100%;
+	background:#2eb596;
+	color:#fff;
+}
+table{
+	margin-left:1.5em;
+	height:5em;
+}
