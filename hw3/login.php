@@ -37,7 +37,7 @@
 			
 			//Step2
 			$error = 0;
-			$query = "SELECT * FROM member2";
+			$query = "SELECT * FROM member";
 			$sth = $db->prepare($query);
 			$sth->execute();
 				
@@ -47,7 +47,7 @@
 				$password = $_POST['Password2'];
 			
 				//Check Account exist or not
-				$query = "SELECT * FROM member2 where username = ?";
+				$query = "SELECT * FROM member where username = ?";
 				$checkuser = $db->prepare($query);
 				$checkuser->execute(array($username));
 				$row = $checkuser->fetch(PDO::FETCH_ASSOC);
@@ -58,7 +58,7 @@
 						$error = 2;
 					}else{
 					//Insert new Account
-						$sql = "INSERT INTO member2 (username, password) VALUES(?,?)";
+						$sql = "INSERT INTO member (username, password) VALUES(?,?)";
 						$sth = $db->prepare($sql);
 						$sth->execute(array($username,$password));
 						$_POST = array();
@@ -70,7 +70,7 @@
 				$password = $_POST['LoginPassword'];
 			
 				//Check Account exist or not
-				$query = "SELECT * FROM member2 where username = ? AND password = ?";
+				$query = "SELECT * FROM member where username = ? AND password = ?";
 				$checkuser = $db->prepare($query);
 				$checkuser->execute(array($username,$password));
 				$row = $checkuser->fetch(PDO::FETCH_ASSOC);

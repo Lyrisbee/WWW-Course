@@ -26,12 +26,12 @@
 	}
 	if(isset($_POST['likeButton'])){
 		$id = $_POST['postid'];
-		$likesql = "SELECT postlike FROM postlike2 where postid = ? AND user = ?";
+		$likesql = "SELECT postlike FROM postlike where postid = ? AND user = ?";
 		$usernum = $db -> prepare($likesql);
 		$usernum -> execute(Array($id,$username));
 		$likeornot = $usernum -> fetch(PDO::FETCH_ASSOC);
 		if(!$likeornot){
-			$likeinsert = "INSERT INTO postlike2 (user, postid, postlike) VALUES (?,?,?)";
+			$likeinsert = "INSERT INTO postlike (user, postid, postlike) VALUES (?,?,?)";
 			$likeupd = $db -> prepare($likeinsert);
 			$likeupd -> execute(Array($username,$id,1));
 			header("Location: index.php#".$id);
@@ -42,7 +42,7 @@
 			}else{
 				$likeornot['postlike']=0;
 			}
-			$likeupdate = "UPDATE postlike2 SET postlike= ? WHERE postid = ? AND user = ?";
+			$likeupdate = "UPDATE postlike SET postlike= ? WHERE postid = ? AND user = ?";
 			$likeupd = $db -> prepare($likeupdate);
 			$likeupd -> execute(Array($likeornot['postlike'],$id,$username));
 			header("Location: index.php#".$id);
@@ -57,7 +57,7 @@
 		}else{
 			$id = $_POST['postid'];
 			$text = $_POST['commentval'];
-			$insert_comment="INSERT INTO comment2 (value,postid,owner,time) VALUES(?,?,?,?)";
+			$insert_comment="INSERT INTO comment (value,postid,owner,time) VALUES(?,?,?,?)";
 			$sth = $db->prepare($insert_comment);
 			$sth->execute(Array($text,$id,$username, date('Y-m-d H:i:s')));
 			header("Location: index.php#".$id);
@@ -72,7 +72,7 @@
 	}elseif(isset($_POST['postbtn'])){
 		$id = $_POST['imgid'];
 		$text = $_POST['textval'];
-		$insert_post="INSERT INTO post2 (owner,value,imageid,time) VALUES(?,?,?,?)";
+		$insert_post="INSERT INTO post (owner,value,imageid,time) VALUES(?,?,?,?)";
 		$sth = $db->prepare($insert_post);
 		$sth->execute(Array($username,$text,$id, date('Y-m-d H:i:s')));
 		unset($_SESSION['uploadsuccess']);
@@ -89,7 +89,7 @@
 		$ext = pathinfo($imagename, PATHINFO_EXTENSION);
 		if(in_array($ext,$allow)&& $filesize > 0 && $filesize < 85*1024 ){
 			//Insert the image name and image content in image_table
-			$insert_image="INSERT INTO image3 (image,imagetitle,owner) VALUES(?,?,?)";
+			$insert_image="INSERT INTO image (image,imagetitle,owner) VALUES(?,?,?)";
 			$sth = $db->prepare($insert_image);
 			$sth->execute(array($imagetmp,$imagename,$username));
 			$_SESSION['uploadsuccess'] = 1;
@@ -125,12 +125,12 @@
 		<div class = "tab-content">
 			<div role="tabpanel" class="tab-pane fade <?php if(!isset($_SESSION['uploadsuccess'])) echo" in active"?>" id="homepage">
 				<?php 
-					$select_post = "SELECT * FROM post2 ORDER BY time DESC;";
+					$select_post = "SELECT * FROM post ORDER BY time DESC;";
 					$sth = $db -> prepare($select_post);
 					$sth -> execute();
 								
 					foreach($sth -> fetchAll() as $postrow){
-						$sql = "SELECT * FROM image3 where id = ?";
+						$sql = "SELECT * FROM image where id = ?";
 						$imageget = $db -> prepare($sql);
 						$imageget -> execute(Array($postrow['imageid']));
 						$imagedata = $imageget -> fetch(PDO::FETCH_ASSOC);
@@ -149,7 +149,7 @@
 								<form action="index.php" method="post" class="form-inline commentform ">
 									<input type="hidden" name="postid" value="<?php echo $postrow['id']; ?>">
 									<?php
-										$likesql = "SELECT * FROM postlike2 where postid = ? AND user = ?";
+										$likesql = "SELECT * FROM postlike where postid = ? AND user = ?";
 										$usernum = $db -> prepare($likesql);
 										$usernum -> execute(Array($postrow['id'],$username));
 										$likeornot = $usernum -> fetch(PDO::FETCH_ASSOC);
@@ -158,7 +158,7 @@
 								</form>
 								<h6>
 								<?php
-									$sum_like = "SELECT postid,SUM(postlike) as total FROM postlike2 where postid = ? GROUP BY postid";
+									$sum_like = "SELECT postid,SUM(postlike) as total FROM postlike where postid = ? GROUP BY postid";
 									$likenum = $db -> prepare($sum_like);
 									$likenum -> execute(Array($postrow['id']));
 									$num = $likenum -> fetch(PDO::FETCH_ASSOC);
@@ -169,7 +169,7 @@
 
 							<table class = "table table-striped">
 								<?php
-									$sql = "SELECT * FROM comment2 where postid = ? ORDER BY time;";
+									$sql = "SELECT * FROM comment where postid = ? ORDER BY time;";
 									$commentget = $db -> prepare($sql);
 									$commentget -> execute(Array($postrow['id']));
 									foreach($commentget -> fetchAll() as $commentrow){	
@@ -207,11 +207,11 @@
 					</form>
 					";}?>
 						<?php if(isset($_SESSION['uploadsuccess'])){
-								$last = "SELECT * FROM image3 WHERE owner = ? ORDER BY id DESC LIMIT 1;";
+								$last = "SELECT * FROM image WHERE owner = ? ORDER BY id DESC LIMIT 1;";
 								$sth = $db->prepare($last);
 								$sth->execute(Array($username));
 								$row = $sth->fetch(PDO::FETCH_ASSOC);
-								$sql = "SELECT * FROM image3 where id = ?";
+								$sql = "SELECT * FROM image where id = ?";
 								$sth = $db -> prepare($sql);
 								$sth -> execute(Array($row['id']));
 								$row = $sth -> fetch(PDO::FETCH_ASSOC);
